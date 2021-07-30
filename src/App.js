@@ -40,10 +40,11 @@ function App() {
   }
 
   const addToFovarite = async (item) => {
+    console.log(item)
     try {
-      if(favoriteItems.find(e => e.id === item.id)){
+      if(favoriteItems.find(e => e.itemId === item.itemId)){
         axios.delete(`https://6103ff2e3356ea001748f5f5.mockapi.io/api/favorites/${item.id}`)
-        setFavorite(prev => prev.filter((e) => e.id !== item.id))
+        setFavorite(prev => prev.filter((e) => e.itemId !== item.itemId))
       }else{
         const { data } = await axios.post("https://6103ff2e3356ea001748f5f5.mockapi.io/api/favorites", item)
         setFavorite(prev => [...prev, data])

@@ -16,6 +16,7 @@ function Favorites({
                     <Card 
                         key={element.id}
                         id={element.id}
+                        itemId={element.itemId}
                         title={element.title}
                         price={element.price}
                         imgUrl={element.imgUrl}
