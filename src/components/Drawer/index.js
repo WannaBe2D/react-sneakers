@@ -1,6 +1,17 @@
 import styles from './Drawer.module.scss';
+import React from 'react'
+import AppContext from '../../context';
+import Info from '../Info';
 
-function Drawer({ onClose, onRemove, items=[] }) {
+function Drawer({onRemove, items=[] }) {
+    const[order, setOrder] = React.useState(false)
+    const {onClose, createOrder} = React.useContext(AppContext);
+
+    const deleteAllItemCart = () => {
+      setOrder(true);
+      createOrder(items.map((e) => e.id));
+    }
+    
     return (
       <div className={styles.overlay}>
         {items.length > 0 ? <div className={styles.drawer}>
@@ -10,8 +21,8 @@ function Drawer({ onClose, onRemove, items=[] }) {
             </div>
             <div className={styles.cartItems}>
               {items.map((element) => (
-                <div className={styles.item}>
-                  <img className={styles.itemImg} width={70} height={70} src={element.imgUrl} alt="item" />
+                <div key={element.id} className={styles.item}>
+                  <img className={styles.itemImg} width={70} height={70} src={element.image} alt="item" />
                   <div>
                     <span>{element.title}</span>
                     <b>{element.price} руб.</b>
@@ -25,15 +36,26 @@ function Drawer({ onClose, onRemove, items=[] }) {
                 <li><span>Итого:</span><div></div><b>21 498 руб.</b></li>
                 <li><span>Налог 5%:</span><div></div><b>1074 руб.</b></li>
               </ul>
-              <button className="greenButton">Оформить заказ <img className="arrowRight" src="/imgAssets/arrow.svg" alt="arrow" /></button>
+              <button onClick={() => deleteAllItemCart()} className="greenButton">Оформить заказ <img className="arrowRight" src="/imgAssets/arrow.svg" alt="arrow" /></button>
             </div>
         </div> 
-        : 
+        :
         <div className={styles.emptyCart}>
           <div className={styles.info}>
-            <img width={120} height={120} src="/imgAssets/box.jpg" alt="box" />
-            <h4>Корзина пустая</h4>
-            <p>Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
+              {
+                order ?
+                <Info
+                title="Заказ оформлен!"
+                description="Ваш заказ #18 скоро будет передан курьерской доставке"
+                image="/imgAssets/order.png"
+                /> 
+                :
+                <Info
+                title="Корзина пустая"
+                description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+                image="/imgAssets/box.jpg"
+                /> 
+              }
             <button onClick={onClose} className="greenButton"><img className="arrowLeft" src="/imgAssets/arrowBack.svg" alt="arrow" /> Вернуться назад</button>
           </div>
         </div>}  

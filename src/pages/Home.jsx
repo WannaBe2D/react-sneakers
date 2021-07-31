@@ -1,13 +1,38 @@
 import Card from '../components/Card';
+import React from 'react'
 
 function Home({
     searchValue,
     onChangeValue,
     setSearchValue,
     items,
-    addToFovarite,
     addToCart,
+    isLoading,
 }) {
+
+      const returnItem = () => {
+        const filteredItems = items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()));
+      return (
+        isLoading ? [...Array(8)].map((element, index) => (
+          <Card
+            key={index} 
+            isLoading={isLoading}
+          />))
+        :
+         filteredItems.map((element) => (
+          <Card 
+            key={element.id}
+            id={element.id}
+            title={element.title}
+            price={element.price}
+            imgUrl={element.image}
+            onAddCart={addToCart}
+            isLoading={isLoading}
+          />))
+      
+      );
+    }
+
     return (
         <div className="content">
             <div className="content-navigation">
@@ -18,21 +43,7 @@ function Home({
                 {searchValue && <img onClick={() => setSearchValue('')} className="removeSeacrh cu-p" src="/imgAssets/remove.svg" alt="remove" />}
             </div>
             </div>
-            <div className="items">
-            {items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                .map((element) => (
-                <Card 
-                    key={element.id}
-                    id={element.id}
-                    itemId={element.itemId}
-                    title={element.title}
-                    price={element.price}
-                    imgUrl={element.imgUrl}
-                    onAddFavorite={addToFovarite}
-                    onAddCart={addToCart}
-                />
-            ))}
-            </div>
+            <div className="items">{returnItem()}</div>
         </div>
     );
 }

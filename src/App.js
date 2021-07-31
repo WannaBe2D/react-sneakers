@@ -2,10 +2,12 @@ import './index.scss';
 import Header from './components/Header';
 import axios from 'axios';
 import React from 'react';
+import AppContext from './context';
 import Drawer from './components/Drawer';
 import { Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+
 
 function App() {
 
@@ -17,36 +19,41 @@ function App() {
 
   const[cartItems, setCartItems] = React.useState([]);
   const[favoriteItems, setFavorite] = React.useState([]);
+
+  const[isLoading, setIsLoading] = React.useState(true);
   
   React.useEffect(() => {
-    axios.get("https://6103ff2e3356ea001748f5f5.mockapi.io/api/sneakers")
-    .then((response) => {
-      setItems(response.data);
-    })
+    async function fetchData() {
+      const itemsResponse = await axios.get("http://127.0.0.1:8000/api/react_sneakers/");
+      const cartResponse = await axios.get("http://127.0.0.1:8000/api/react_cart/");
+      const favoriteResponse = await axios.get("http://127.0.0.1:8000/api/react_favorite/");
+      
+      setIsLoading(false);
+      setCartItems(cartResponse.data['0']['sneakers']);
+      setFavorite(favoriteResponse.data['0']['sneakers']);
+      setItems(itemsResponse.data);
+    }
 
-    axios.get("https://6103ff2e3356ea001748f5f5.mockapi.io/api/cart")
-    .then((response) => {
-      setCartItems(response.data);
-    })
-
-    axios.get("https://6103ff2e3356ea001748f5f5.mockapi.io/api/favorites")
-    .then((response) => {
-      setFavorite(response.data);
-    })
+    fetchData();
   }, []);
 
   const onChangeValue = (event) => {
     setSearchValue(event.target.value);
   }
 
-  const addToFovarite = async (item) => {
-    console.log(item)
+  const addToFovarite = async (id) => {
     try {
-      if(favoriteItems.find(e => e.itemId === item.itemId)){
-        axios.delete(`https://6103ff2e3356ea001748f5f5.mockapi.io/api/favorites/${item.id}`)
-        setFavorite(prev => prev.filter((e) => e.itemId !== item.itemId))
+      if(favoriteItems.find(e => e.id === id)){
+        axios.delete(`http://127.0.0.1:8000/api/react_favorite/`, {
+          data: {
+            "id": id
+          }
+        })
+        setFavorite(prev => prev.filter((e) => e.id !== id))
       }else{
-        const { data } = await axios.post("https://6103ff2e3356ea001748f5f5.mockapi.io/api/favorites", item)
+        const { data } = await axios.post("http://127.0.0.1:8000/api/react_favorite/", {
+          "id": id
+        })
         setFavorite(prev => [...prev, data])
       }
     } catch (error){
@@ -54,25 +61,66 @@ function App() {
     }
   }
 
-  const addToCart = (item) => {
-    axios.post("https://6103ff2e3356ea001748f5f5.mockapi.io/api/cart",item)
-    setCartItems(prev => [...prev, item])
+  const addToCart = async (id) => {
+   try {
+    if(cartItems.find(e => e.id === id)){
+      axios.delete(`http://127.0.0.1:8000/api/react_cart/`, {
+        data: {
+          "id": id
+        }
+      })
+      setCartItems(prev => prev.filter((e) => e.id !== id))
+      }else {
+        const { data } = await axios.post("http://127.0.0.1:8000/api/react_cart/", {
+          "id": id
+        }) 
+        setCartItems(prev => [...prev, data])
+      }
+   } catch(error) {
+    alert('Не удалось добавить в корзину');
+   }
   }
 
   const removeItemCart = (id) => {
-    axios.delete(`https://6103ff2e3356ea001748f5f5.mockapi.io/api/cart/${id}`)
+    axios.delete(`http://127.0.0.1:8000/api/react_cart/`, {
+      data: {
+        "id": id
+      }
+    })
     setCartItems(prev => prev.filter((item) => item.id !== id))
   }
 
+  const isItemAdded = (id) => {
+    return cartItems.some((item) => item.id === id)
+  }
+
+  const isItemFavorited = (id) => {
+    return favoriteItems.some((item) => item.id === id)
+  }
+
+  const onClose = () => {
+    setCartOpened(false)
+  }
+
+  const createOrder = async(id) => {
+    try {
+      await axios.post('http://127.0.0.1:8000/api/react_order/', {
+        "sneakers": id
+      })
+      setCartItems([]);
+    }catch(error){
+      alert('Не удалось сделать заказ')
+    }
+  }
+
   return (
+    <AppContext.Provider value={{ items, cartItems, favoriteItems, isItemAdded, addToFovarite, isItemFavorited, onClose, createOrder}}>
     <div className="wrapper clear">
-      {cartOpened && <Drawer onRemove={removeItemCart} items={cartItems} onClose={() => setCartOpened(false)}  />}
+      {cartOpened && <Drawer onRemove={removeItemCart} items={cartItems}  />}
       <Header onClickCart={() => setCartOpened(true)} />
 
       <Route path="/favorites">
-        <Favorites 
-          items={favoriteItems}
-          addToFovarite={addToFovarite}
+        <Favorites
           addToCart={addToCart} 
         />
       </Route>
@@ -83,12 +131,13 @@ function App() {
           setSearchValue={setSearchValue}
           onChangeValue={onChangeValue}
           items={items}
-          addToFovarite={addToFovarite}
           addToCart={addToCart}
+          cartItems={cartItems}
+          isLoading={isLoading}
          />
-      </Route>
-      
+      </Route>      
     </div>
+    </AppContext.Provider>
   );
 }
 
