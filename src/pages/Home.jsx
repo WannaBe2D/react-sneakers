@@ -38,9 +38,9 @@ function Home({
             <div className="content-navigation">
             <h2>{searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все кроссовки'}</h2>
             <div className="context-search">
-                <img className="imgSearch" src="/imgAssets/search.svg" alt="search" />
+                <img className="imgSearch" src="imgAssets/search.svg" alt="search" />
                 <input onChange={onChangeValue} value={searchValue} placeholder="Поиск..." maxLength={36} />
-                {searchValue && <img onClick={() => setSearchValue('')} className="removeSeacrh cu-p" src="/imgAssets/remove.svg" alt="remove" />}
+                {searchValue && <img onClick={() => setSearchValue('')} className="removeSeacrh cu-p" src="imgAssets/remove.svg" alt="remove" />}
             </div>
             </div>
             <div className="items">{returnItem()}</div>

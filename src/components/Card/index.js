@@ -34,8 +34,8 @@ function Card({ id, title, price, imgUrl, onAddFavorite, onAddCart, isLoading })
               </ContentLoader>
               : 
               <>
-              <div onClick={onClickFavorite} className={styles.favorite}>
-                {isItemFavorited(id) ? <img src="/imgAssets/inFavorite.png" alt="product" /> : <img src="/imgAssets/favoriteItem.png" alt="product" />}
+            <div onClick={onClickFavorite} className={styles.favorite}>
+                {isItemFavorited(id) ? <img src="imgAssets/inFavorite.png" alt="product" /> : <img src="imgAssets/favoriteItem.png" alt="product" />}
             </div>
             <img width="100%" height={135} src={imgUrl} alt="item" />
             <h5>{title}</h5>
@@ -45,7 +45,7 @@ function Card({ id, title, price, imgUrl, onAddFavorite, onAddCart, isLoading })
                 <b>{price} руб.</b>
                 </div>
                 <div onClick={onClickPlus}>
-                    {isItemAdded(id) ? <img className={styles.add} src="/imgAssets/inCart.svg" alt="add" /> : <img className={styles.add} src="/imgAssets/add.svg" alt="add" />}
+                    {isItemAdded(id) ? <img className={styles.add} src="imgAssets/inCart.svg" alt="add" /> : <img className={styles.add} src="imgAssets/add.svg" alt="add" />}
                 </div>
             </div>
               </>
