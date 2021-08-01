@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.fc48118a.chunk.css",
-    "main.js": "/static/js/main.75eb002e.chunk.js",
-    "main.js.map": "/static/js/main.75eb002e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.a54f5298.js",
-    "runtime-main.js.map": "/static/js/runtime-main.a54f5298.js.map",
-    "static/css/2.1cdcfe91.chunk.css": "/static/css/2.1cdcfe91.chunk.css",
-    "static/js/2.e078d2a1.chunk.js": "/static/js/2.e078d2a1.chunk.js",
-    "static/js/2.e078d2a1.chunk.js.map": "/static/js/2.e078d2a1.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.1cdcfe91.chunk.css.map": "/static/css/2.1cdcfe91.chunk.css.map",
-    "static/css/main.fc48118a.chunk.css.map": "/static/css/main.fc48118a.chunk.css.map",
-    "static/js/2.e078d2a1.chunk.js.LICENSE.txt": "/static/js/2.e078d2a1.chunk.js.LICENSE.txt"
+    "main.css": "/WannaBe2D/react-sneakers/static/css/main.fc48118a.chunk.css",
+    "main.js": "/WannaBe2D/react-sneakers/static/js/main.75eb002e.chunk.js",
+    "main.js.map": "/WannaBe2D/react-sneakers/static/js/main.75eb002e.chunk.js.map",
+    "runtime-main.js": "/WannaBe2D/react-sneakers/static/js/runtime-main.c13c1768.js",
+    "runtime-main.js.map": "/WannaBe2D/react-sneakers/static/js/runtime-main.c13c1768.js.map",
+    "static/css/2.1cdcfe91.chunk.css": "/WannaBe2D/react-sneakers/static/css/2.1cdcfe91.chunk.css",
+    "static/js/2.e078d2a1.chunk.js": "/WannaBe2D/react-sneakers/static/js/2.e078d2a1.chunk.js",
+    "static/js/2.e078d2a1.chunk.js.map": "/WannaBe2D/react-sneakers/static/js/2.e078d2a1.chunk.js.map",
+    "index.html": "/WannaBe2D/react-sneakers/index.html",
+    "static/css/2.1cdcfe91.chunk.css.map": "/WannaBe2D/react-sneakers/static/css/2.1cdcfe91.chunk.css.map",
+    "static/css/main.fc48118a.chunk.css.map": "/WannaBe2D/react-sneakers/static/css/main.fc48118a.chunk.css.map",
+    "static/js/2.e078d2a1.chunk.js.LICENSE.txt": "/WannaBe2D/react-sneakers/static/js/2.e078d2a1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.a54f5298.js",
+    "static/js/runtime-main.c13c1768.js",
     "static/css/2.1cdcfe91.chunk.css",
     "static/js/2.e078d2a1.chunk.js",
     "static/css/main.fc48118a.chunk.css",
